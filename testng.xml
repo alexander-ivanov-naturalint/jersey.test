@@ -1,0 +1,7 @@
+<suite name="Suite1" verbose="1" >
+    <test name="Calculator operations" >
+        <classes>
+            <class name="com.example.CalcTest" />
+        </classes>
+    </test>
+</suite>

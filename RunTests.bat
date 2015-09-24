@@ -1,0 +1,1 @@
+mvn test -DtestNG.file=/path/to/testng.xml 
