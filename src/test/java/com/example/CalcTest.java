@@ -6,7 +6,8 @@ import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.*;
 
-import com.example.Listeners.TestListener;
+import com.example.Calculator.Logging.Listeners.TestListener;
+import com.example.Calculator.Logging.Listeners.TestLog;
 import org.glassfish.grizzly.http.server.HttpServer;
 
 import org.testng.Assert;
@@ -18,46 +19,6 @@ public class CalcTest {
 
     private HttpServer server;
     private WebTarget target;
-
-    @BeforeSuite
-    public void setUp() throws Exception {
-        server = Main.startServer();
-        Client c = ClientBuilder.newClient();
-        target = c.target(Main.BASE_URI);
-    }
-
-    @AfterSuite
-    public void tearDown() throws Exception {
-        server.shutdown();
-    }
-
-    @DataProvider(name = "multiplication")
-    public static Object[][] multiplicationArray() {
-        return new Object[][] {
-                {new Object[]{2.4, 1.2}, 2.88 },
-                {new Object[]{-2.0, 5.6}, -11.2},
-                {new Object[]{3.3, 0.0}, 0.0},
-                {new Object[]{3.3, "as"}, null},
-                {new Object[]{3.3, true}, null}};
-    }
-
-    @DataProvider(name = "add")
-    public static Object[][] addArray() {
-        return new Object[][] {
-                {new Object[]{2.4, 1.2}, 3.6 },
-                {new Object[]{-2.0, 5.6}, 3.6},
-                {new Object[]{3.3, "as"}, null},
-                {new Object[]{3.3, true}, null}};
-    }
-
-    @DataProvider(name = "bin")
-    public static Object[][] binArray() {
-        return new Object[][] {
-                {new Object[]{1, 2, 3, 4, 5}, new long[]{1, 10, 11, 100, 101}},
-                {new Object[]{1, "as", 3, 4, 5}, null},
-                {new Object[]{1, true, 3, 4, 5}, null}};
-    }
-
 
 
     @Test(dataProvider = "multiplication"
@@ -154,5 +115,48 @@ public class CalcTest {
         //delete new constant
         response = target.path(path).request().delete();
         Assert.assertEquals(response.getStatus(), 200);
+    }
+
+    
+    @DataProvider(name = "multiplication")
+    public static Object[][] multiplicationArray() {
+        return new Object[][] {
+                {new Object[]{2.4, 1.2}, 2.88 },
+                {new Object[]{-2.0, 5.6}, -11.2},
+                {new Object[]{3.3, 0.0}, 0.0},
+                {new Object[]{3.3, "as"}, null},
+                {new Object[]{3.3, true}, null}};
+    }
+
+    @DataProvider(name = "add")
+    public static Object[][] addArray() {
+        return new Object[][] {
+                {new Object[]{2.4, 1.2}, 3.6 },
+                {new Object[]{-2.0, 5.6}, 3.6},
+                {new Object[]{3.3, "as"}, null},
+                {new Object[]{3.3, true}, null}};
+    }
+
+    @DataProvider(name = "bin")
+    public static Object[][] binArray() {
+        return new Object[][] {
+                {new Object[]{1, 2, 3, 4, 5}, new long[]{1, 10, 11, 100, 101}},
+                {new Object[]{1, "as", 3, 4, 5}, null},
+                {new Object[]{1, true, 3, 4, 5}, null}};
+    }
+
+
+    @BeforeSuite
+    public void setUp() throws Exception {
+        TestLog.logger.info("Start server.");
+        server = Main.startServer();
+        Client c = ClientBuilder.newClient();
+        target = c.target(Main.BASE_URI);
+    }
+
+    @AfterSuite
+    public void tearDown() throws Exception {
+        TestLog.logger.info("Shutdown server.");
+        server.shutdown();
     }
 }

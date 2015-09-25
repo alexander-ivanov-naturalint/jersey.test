@@ -108,6 +108,23 @@
             </plugin>
         </plugins>
 
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                    <include>log4j.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/test/resources</directory>
+                <targetPath>${project.build.directory}</targetPath>
+                <includes>
+                    <include>log4j.properties</include>
+                </includes>
+            </resource>
+        </resources>
+
     </build>
 
     <properties>

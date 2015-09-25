@@ -1,5 +1,8 @@
 package com.example.Calculator;
 
+import com.example.Calculator.Logging.Listeners.MyApplicationEventListener;
+
+import javax.inject.Singleton;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -9,7 +12,8 @@ import javax.ws.rs.core.Response;
  */
 
 @Path("")
-public class Calc
+@Singleton
+public class Calc extends MyApplicationEventListener
 {
     //This method illustrates usage of @GET request
     @GET
